@@ -7,11 +7,15 @@ import (
 )
 
 func main() {
+	if len(os.Args) != 2 {
+		fmt.Println("vin: Not enough args")
+		os.Exit(0)
+	}
 	lang := os.Args[1]
 	name := os.Args[2]
 	switch lang {
 	default:
-		fmt.Println("No lang found")
+		fmt.Printf("vin: We do not supported %v yet. Make a pr if you want\n", name)
 		os.Exit(0)
 	case "go":
 		run("go", []string{"mod", "init", name})
@@ -21,6 +25,8 @@ func main() {
 		os.WriteFile(fmt.Sprintf("cmd/%v/main.go", name), []byte(get("go")), 0755)
 	case "c":
 		src("c", "c")
+	case "cpp", "c++":
+		src("c", "cpp")
 	case "python":
 		src("python", "py")
 	}
@@ -36,7 +42,9 @@ func run(command string, args []string) {
 
 func src(lang string, ext string) {
 	os.Mkdir("src", 0755)
-	os.MkdirAll(fmt.Sprintf("%v-out/bin", lang), 0755)
+	if lang != "python" {
+		os.MkdirAll(fmt.Sprintf("%v-out/bin", lang), 0755)
+	}
 	os.WriteFile(fmt.Sprintf("src/main.%v", ext), []byte(get(lang)), 0755)
 }
 
@@ -44,7 +52,7 @@ func get(lang string) string {
 	switch lang {
 	case "go":
 		return "package main\n\nfunc main() {\n\treturn\n}"
-	case "c":
+	case "c", "cpp":
 		return "int main() {\n\treturn 0\n}"
 	case "python":
 		return "print('Hello, World!')"
