@@ -42,7 +42,12 @@ func main() {
 		src("javascript", "js", false, name)
 	case "rust":
 		run("cargo", []string{"new", name})
-
+	}
+	fmt.Printf("CD into %v [y/N] ", name)
+	var cd string
+	fmt.Scan(&cd)
+	if strings.Contains(cd, "y") {
+		os.Chdir(name)
 	}
 }
 
