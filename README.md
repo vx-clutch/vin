@@ -6,6 +6,7 @@ An opinionated init tool for many languages
     - Go
     - Python
     - C/C++
+    - JS
 
 # Usage
 
