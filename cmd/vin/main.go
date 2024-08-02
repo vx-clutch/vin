@@ -8,6 +8,10 @@ import (
 )
 
 func main() {
+	if len(os.Args) < 2 {
+		fmt.Println("vin: Not enough arguments\n\tcorrect usage: vin --{optioanl flags} {lang} {name}")
+		os.Exit(0)
+	}
 	if os.Args[1] == "--src" {
 		customLangInput := os.Args[2]
 		customName := os.Args[3]
@@ -42,12 +46,6 @@ func main() {
 		src("javascript", "js", false, name)
 	case "rust":
 		run("cargo", []string{"new", name})
-	}
-	fmt.Printf("CD into %v [y/N] ", name)
-	var cd string
-	fmt.Scan(&cd)
-	if strings.Contains(cd, "y") {
-		os.Chdir(name)
 	}
 }
 
