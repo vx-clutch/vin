@@ -4,7 +4,8 @@ build:
 	@go build -o ./go-out/bin/vin ./cmd/vin/main.go
 
 install:
-	@go install -o vin ./cmd/vin/main.go
+	@go install ./cmd/vin/main.go
+	@mv ~/go/bin/main ~/go/bin/vin
 
 clean:
 	@-rm ./go-out/bin/*
